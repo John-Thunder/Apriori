@@ -1,0 +1,6 @@
+C:\Users\wnz9u\Source\Repos\Apriori\apriori\bin\Debug\apriori.exe.config
+C:\Users\wnz9u\Source\Repos\Apriori\apriori\bin\Debug\apriori.exe
+C:\Users\wnz9u\Source\Repos\Apriori\apriori\bin\Debug\apriori.pdb
+C:\Users\wnz9u\Source\Repos\Apriori\apriori\obj\Debug\apriori.csprojResolveAssemblyReference.cache
+C:\Users\wnz9u\Source\Repos\Apriori\apriori\obj\Debug\apriori.exe
+C:\Users\wnz9u\Source\Repos\Apriori\apriori\obj\Debug\apriori.pdb
