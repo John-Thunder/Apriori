@@ -4,3 +4,9 @@ C:\Users\wnz9u\Source\Repos\Apriori\apriori\bin\Release\apriori.pdb
 C:\Users\wnz9u\Source\Repos\Apriori\apriori\obj\Release\apriori.csprojResolveAssemblyReference.cache
 C:\Users\wnz9u\Source\Repos\Apriori\apriori\obj\Release\apriori.exe
 C:\Users\wnz9u\Source\Repos\Apriori\apriori\obj\Release\apriori.pdb
+C:\Users\Thunder\Source\Repos\Apriori\apriori\bin\Release\apriori.exe.config
+C:\Users\Thunder\Source\Repos\Apriori\apriori\bin\Release\apriori.exe
+C:\Users\Thunder\Source\Repos\Apriori\apriori\bin\Release\apriori.pdb
+C:\Users\Thunder\Source\Repos\Apriori\apriori\obj\Release\apriori.csprojResolveAssemblyReference.cache
+C:\Users\Thunder\Source\Repos\Apriori\apriori\obj\Release\apriori.exe
+C:\Users\Thunder\Source\Repos\Apriori\apriori\obj\Release\apriori.pdb

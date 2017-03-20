@@ -1,70 +1,169 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace apriori
 {   
     class Program
-    {   static Dictionary<string, int> C1 = new Dictionary<string, int>();
-        static Dictionary<string, int> C2 = new Dictionary<string, int>();
-        static Dictionary<string, int> C3 = new Dictionary<string, int>();
-        static Dictionary<string, int> L1 = new Dictionary<string, int>();
-        static Dictionary<string, int> L2 = new Dictionary<string, int>();
-        static Dictionary<string, int> L3 = new Dictionary<string, int>();
+    {   static List<ItemSet> transactions; 
+        static List<ItemSet> freqitemsets; 
         static void Main(string[] args)
         {
-            string line;
+            transactions = new List<ItemSet>();
+            freqitemsets = new List<ItemSet>();
 
-            //System.Collections.Generic.List<string> table = new System.Collections.Generic.List<string>();
-            // Read the file and display it line by line.
-
-            System.IO.StreamReader file =
-               new System.IO.StreamReader("../../test_Data/T15I7N0.5KD1K.txt");
-            int value;
-            while ((line = file.ReadLine()) != null)
-            {
-                string[] tokens = line.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
-                for (int i = 0; i < tokens.Length; i++)
-			    {
-                    if (!C1.TryGetValue(tokens[i],out value))
-	                {
-                        C1.Add(tokens[i], 1);
-	                }
-                    else if (C1.TryGetValue(tokens[i],out value))
-                    {
-                        C1[tokens[i]] = C1[tokens[i]] + 1;
-                    }
-			    }
-
-                //int[] convertedItems = Array.ConvertAll<string, int>(tokens, int.Parse);
-            }
-            L1=GetL(C1,5);
-            file.Close();
-            Print(L1);
+            addTransactions();
             // Suspend the screen.
             Console.ReadLine();
         }
+        /*
         public static Dictionary<string, int> GetL(Dictionary<string, int> c, double d)
         {
             Dictionary<string, int> l = new Dictionary<string, int>();
             foreach (string obj in c.Keys)
             {
-                if (c[obj]>d)
+                if (c[obj]>=d)
                 {
                     l.Add(obj, c[obj]);
                 }
             } 
             return l;
         }
-        public static void Print(Dictionary<string, int> Dic)
+        public static int Print(Dictionary<string, int> Dic)
         {   int sum=0;
             foreach (string s in Dic.Keys)
             {
                 sum=sum+Dic[s];
             }
-            Console.WriteLine(sum);
+            return sum;
         }
+        public static List<List<String>> NoRepeat(List<List<String>> T)
+        {
+            List<List<String>> L = new List<List<String>>();
+            for (int i = 0; i < T.Count; i++)
+            {
+                if (L.Contains(T[i])) { }
+                else if (!L.Contains(T[i]))
+                {
+                    L.Add(T[i]);
+                }
+            }
+            T = L;
+            return T;
+        }
+        public static bool IsExistRepeatElement(StringBuilder sbs,out StringBuilder temp)
+        {
+            ArrayList sb = new ArrayList();
+            String[] myArray = sbs.ToString().Split(' ');
+            for (int i = 0; i < myArray.Length; i++)
+            {
+                 if (myArray[i]!="")
+                 {
+                    sb.Add(myArray[i]);
+                 }
+            }
+            for (int i = 0; i < sb.Count; i++)
+            {
+                for (int j = sb.Count-1; j > i; j--)
+                {
+                    if (sb[i].Equals(sb[j]))
+                    {
+                        sb.Remove(sb[i]);
+                        sb.Sort();
+                        temp = new StringBuilder();
+                        for (int k = 0; k < sb.Count; k++)
+                        {
+                            temp.Append(sb[k]+" "); 
+                        }
+                        return true;
+                    }
+                }
+            }
+            temp = new StringBuilder();
+            return false;
+        }
+        public static bool IsInL2(Dictionary<string, int> L_n,ArrayList al)
+        {
+            for (int i = 0; i < L_n.Count; i++)
+            {
+                if (L_n.ContainsKey(al[0].ToString() +" "+ al[1].ToString()) || L_n.ContainsKey(al[1].ToString() +" "+ al[0].ToString()))
+                {
+                    return true;
+                }
+                else 
+                    return false;
+            }
+            return false;
+        }
+        */
+        static List<ItemSet> l1scan(List<ItemSet> candidateItemsets, int patternNum)
+        {
+            List<ItemSet> newcandidateItemsets = new List<ItemSet>();
+
+            foreach (ItemSet iset in candidateItemsets)
+            {
+                ItemSet newcandidate = new ItemSet();// = iset;
+
+                iset.support = GetSupport(iset);
+                iset.clone(newcandidate);
+                if (newcandidate.support >= 5)
+                {
+                    newcandidateItemsets.Add(newcandidate);
+                }
+            }
+            //Console.WriteLine("Frequent Pattern for " + patternNum + " - Itemset and min support");
+            //foreach (ItemSet i in newcandidateItemsets)
+            //Console.WriteLine(i.stringRepresentationWithSpace() +  " " + i.support);
+            return newcandidateItemsets;
+
+
+        }
+        static void addTransactions()
+        {
+            //   int lineNum = 0;
+            string line;
+            using (StreamReader sr = new StreamReader("../../test_Data/john.txt"))
+            {
+
+                while ((line = sr.ReadLine()) != null)
+                {
+                    List<string> data = line.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    ItemSet set = new ItemSet();
+                    foreach (string d in data)
+                    {
+                        if (!d.Equals(""))
+                        {
+                            Item it = new Item(d);
+                            set.add(it);
+                        }
+
+                    }
+                    set.sort();
+                    transactions.Add(set);
+
+                    //  lineNum++;
+                }
+            }
+        }
+        static double GetSupport(ItemSet i1)
+        {
+            double support = 0;
+
+            foreach (ItemSet transaction in transactions)
+            {
+                if (transaction.contains(i1))
+                {
+                    support++;
+                }
+            }
+
+            return support;
+        }
+
     }
+
 }
